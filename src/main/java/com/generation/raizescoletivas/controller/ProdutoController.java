@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.raizescoletivas.model.Produto;
+import com.generation.raizescoletivas.repository.CategoriaRepository;
 import com.generation.raizescoletivas.repository.ProdutoRepository;
 
 import jakarta.validation.Valid;
@@ -30,6 +31,9 @@ public class ProdutoController {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
+
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 
 	// LISTAR TODOS OS PRODUTOS
 	@GetMapping
@@ -53,15 +57,27 @@ public class ProdutoController {
 	// CRIAR PRODUTO
 	@PostMapping
 	public ResponseEntity<Produto> post(@Valid @RequestBody Produto produto) {
-		return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+		if (categoriaRepository.existsById(produto.getCategoria().getId())) {
+			return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+		}
+
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A categoria informada não existe!", null);
 	}
 
 	// ATUALIZAR PRODUTO
 	@PutMapping
 	public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto) {
-		return produtoRepository.findById(produto.getId())
-				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto)))
-				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+
+		if (produtoRepository.existsById(produto.getId())) {
+
+			if (categoriaRepository.existsById(produto.getCategoria().getId())) {
+				return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+			}
+
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A categoria informada não existe!", null);
+		}
+
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
 	// DELETAR PRODUTO
@@ -71,7 +87,7 @@ public class ProdutoController {
 		Optional<Produto> produto = produtoRepository.findById(id);
 
 		if (produto.isEmpty())
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "O id informado não foi encontrado!", null);
 
 		produtoRepository.deleteById(id);
 	}
