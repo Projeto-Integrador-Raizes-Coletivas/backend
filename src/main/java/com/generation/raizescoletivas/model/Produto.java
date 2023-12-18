@@ -1,14 +1,16 @@
 package com.generation.raizescoletivas.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -18,24 +20,19 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto incremento
 	private Long id;
 
-	@Column(length = 48)
 	@NotBlank(message = "O nome é obrigatório")
-	@Size(min = 5, max = 48, message = "O nome deve conter entre 5 e 48 caracteres")
+	@Size(min = 3, max = 255, message = "O atributo nome deve conter entre 3 e 255 caracteres")
 	private String nome;
 
-	@Column(length = 48)
-	@NotBlank(message = "O preço é obrigatório")
+	@Column(precision = 10, scale = 2)
+	@NotNull(message = "O preço é obrigatório")
 	@DecimalMin(value = "0.0", inclusive = false)
-	@DecimalMax(value = "9999999999.0", inclusive = true)
-	private Double preco;
+	private BigDecimal preco;
 
-	@Column(length = 255)
-	@NotBlank(message = "Opcional - Insira um url de uma foto")
 	private String foto;
 
-	@Column(length = 1000)
-	@NotBlank(message = "O atributo descrição é obrigatório")
-	@Size(min = 10, max = 1000, message = "O atributo descrição deve conter entre 10 e 1000 letras")
+	@Column(length = 500)
+	@Size(min = 3, max = 500, message = "O atributo descrição deve conter entre 3 e 500 caracteres")
 	private String descricao;
 
 	public Long getId() {
@@ -54,11 +51,11 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
+	public BigDecimal getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
 
