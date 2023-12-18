@@ -2,11 +2,14 @@ package com.generation.raizescoletivas.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "tb_produto")
+@Table(name = "tb_produtos")
 public class Produto {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto incremento
@@ -34,6 +37,10 @@ public class Produto {
 	@Column(length = 500)
 	@Size(min = 3, max = 500, message = "O atributo descrição deve conter entre 3 e 500 caracteres")
 	private String descricao;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Categoria categoria;
 
 	public Long getId() {
 		return id;
@@ -74,5 +81,17 @@ public class Produto {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
+	
+	
+	
 
 }
