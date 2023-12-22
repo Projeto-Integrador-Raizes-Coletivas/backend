@@ -36,7 +36,7 @@ public class ProdutoController {
 	private CategoriaRepository categoriaRepository;
 
 	// LISTAR TODOS OS PRODUTOS
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<Produto>> getAll() {
 		return ResponseEntity.ok(produtoRepository.findAll());
 	}
@@ -82,7 +82,7 @@ public class ProdutoController {
 
 	// DELETAR PRODUTO
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void delete(@PathVariable Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
 

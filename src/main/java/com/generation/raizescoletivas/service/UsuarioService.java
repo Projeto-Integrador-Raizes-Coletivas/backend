@@ -84,7 +84,7 @@ public class UsuarioService {
 				usuarioLogin.get().setSenha("");
 
 				// Retorna o Objeto preenchido
-				return usuarioLogin;
+				return usuarioLogin;  
 
 			}
 
