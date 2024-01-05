@@ -19,6 +19,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "tb_produtos")
 public class Produto {
+
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto incremento
 	private Long id;
@@ -37,22 +38,10 @@ public class Produto {
 	@Column(length = 500)
 	@Size(min = 3, max = 500, message = "O atributo descrição deve conter entre 3 e 500 caracteres")
 	private String descricao;
-	
+
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
-	
-	@ManyToOne
-	@JsonIgnoreProperties("produto")
-	private Usuario usuario;
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public Long getId() {
 		return id;
@@ -101,9 +90,5 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
-	
-	
-	
 
 }

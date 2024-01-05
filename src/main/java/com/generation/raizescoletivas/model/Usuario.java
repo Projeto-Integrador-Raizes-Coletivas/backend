@@ -1,52 +1,32 @@
 package com.generation.raizescoletivas.model;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table (name = "tb_usuarios")
+@Table(name = "tb_usuarios")
 public class Usuario {
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	@NotBlank (message = "O Atributo nome é obrigatório!")
+
+	@NotBlank(message = "O Atributo nome é obrigatório!")
 	private String nome;
-	
-	@Email (message = "O endereço de email deve ser de um formato valido")
-	@NotBlank (message = "O Atributo usuario é obrigatório!")
+
+	@Email(message = "O endereço de email deve ser de um formato valido")
+	@NotBlank(message = "O Atributo usuario é obrigatório!")
 	private String usuario;
-	
-	@NotBlank (message = "O Atributo senha é obrigatório!")
+
+	@NotBlank(message = "O Atributo senha é obrigatório!")
 	private String senha;
-	
+
 	private String foto;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("usuario")
-	private List<Produto> produto;
-
-	
-	public List<Produto> getProduto() {
-		return produto;
-	}
-
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
-	}
 
 	public long getId() {
 		return id;
@@ -87,4 +67,5 @@ public class Usuario {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+
 }
