@@ -20,49 +20,50 @@ import jakarta.validation.constraints.Size;
 public class Categoria {
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank (message = "O Atributo nome é obrigatório!")
-	@Size (min = 5, message = "O Atributo nome deve conter no mínimo 5 caracteres.")
+	@NotBlank(message = "O Atributo nome é obrigatório!")
+	@Size(min = 5, message = "O Atributo nome deve conter no mínimo 5 caracteres.")
 	private String nome;
-	
-	@Size (min = 5, message = "O Atributo classificação deve conter no mínimo 5 caracteres.")
+
+	@Size(min = 5, message = "O Atributo classificação deve conter no mínimo 5 caracteres.")
 	private String classificacao;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria" , cascade = CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("categoria")
 	private List<Produto> produto;
-	
+
 	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
 	public String getNome() {
 		return nome;
 	}
-
 
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-
 	public String getClassificacao() {
 		return classificacao;
 	}
 
-
 	public void setClassificacao(String classificacao) {
 		this.classificacao = classificacao;
 	}
-	
-	
+
+	public List<Produto> getProduto() {
+		return produto;
+	}
+
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
 
 }
