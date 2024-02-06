@@ -9,6 +9,8 @@ public class UsuarioLogin {
 	private String foto;
 	private String token;
 
+	private boolean admin;
+
 	public Long getId() {
 		return this.id;
 	}
@@ -57,4 +59,11 @@ public class UsuarioLogin {
 		this.token = token;
 	}
 
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 }

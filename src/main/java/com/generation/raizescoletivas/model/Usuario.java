@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -29,6 +30,9 @@ public class Usuario {
 	private String senha;
 
 	private String foto;
+
+	@NotNull
+	private boolean admin;
 
 	public long getId() {
 		return id;
@@ -70,4 +74,11 @@ public class Usuario {
 		this.foto = foto;
 	}
 
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 }
