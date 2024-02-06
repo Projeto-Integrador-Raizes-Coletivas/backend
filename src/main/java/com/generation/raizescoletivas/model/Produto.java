@@ -33,6 +33,7 @@ public class Produto {
 	@DecimalMin(value = "0.0", inclusive = false)
 	private BigDecimal preco;
 
+	@NotBlank
 	private String foto;
 
 	@Column(length = 500)
